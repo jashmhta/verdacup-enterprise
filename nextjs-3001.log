@@ -1,0 +1,39 @@
+
+> verdacup-nextjs@0.1.0 dev
+> next dev
+
+   ▲ Next.js 16.0.1 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://169.254.0.21:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 887ms
+Error: Cannot apply unknown utility class `border-border`
+    [2m[at onInvalidCandidate (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:21:1511)][0m
+    [2m[at Te (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:16:36337)][0m
+    [2m[at /home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:21:355][0m
+    [2m[at Tr (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:3:1718)][0m
+    [2m[at _ (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:3:1377)][0m
+    [2m[at Se (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:21:172)][0m
+    [2m[at ln (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:38:294)][0m
+    [2m[at async sn (/home/ubuntu/verdacup-nextjs/node_modules/tailwindcss/dist/lib.js:38:631)][0m
+    [2m[at async Zr (/home/ubuntu/verdacup-nextjs/node_modules/@tailwindcss/node/dist/index.js:10:3385)][0m
+    [2m[at async I (/home/ubuntu/verdacup-nextjs/node_modules/@tailwindcss/postcss/dist/index.js:10:3978)][0m
+ ⨯ ./app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: /home/ubuntu/verdacup-nextjs/app/globals.css:1:1: Cannot apply unknown utility class `border-border`
+    [at Input.error (turbopack:///[project]/node_modules/postcss/lib/input.js:135:16)]
+    [at Root.error (turbopack:///[project]/node_modules/postcss/lib/node.js:146:32)]
+    [at Object.Once (/home/ubuntu/verdacup-nextjs/node_modules/@tailwindcss/postcss/dist/index.js:10:6912)]
+    [at async LazyResult.runAsync (turbopack:///[project]/node_modules/postcss/lib/lazy-result.js:293:11)]
+    [at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34)]
+    [at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Component Browser]
+    ./app/layout.tsx [Server Component]
+
+
+ GET / 500 in 4.0s (compile: 3.8s, render: 128ms)
