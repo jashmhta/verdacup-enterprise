@@ -1,7 +1,14 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, products, categories, cart, orders, orderItems } from "../drizzle/schema";
+import mysql from 'mysql2/promise';
+import { InsertUser, users, products, categories, cart, orders, orderItems } from "@/drizzle/schema";
 import { ENV } from './_core/env';
+
+// Create a connection pool if DATABASE_URL is available
+const pool = process.env.DATABASE_URL ? mysql.createPool(process.env.DATABASE_URL) : null;
+
+// Export drizzle instance for use in Server Components
+export const db = pool ? drizzle(pool) : null as any;
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -208,7 +215,7 @@ export async function getAllOrders() {
 }
 
 export async function updateOrderStatus(orderId: number, status: string) {
-  const db = await getDb();
-  if (!db) return;
-  await db.update(orders).set({ status: status as any }).where(eq(orders.id, orderId));
+  const database = await getDb();
+  if (!database) return;
+  await database.update(orders).set({ status: status as any }).where(eq(orders.id, orderId));
 }

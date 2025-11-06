@@ -25,8 +25,8 @@ export function toPaise(rupees: number): number {
 export function getLoginUrl(redirectTo?: string): string {
   if (typeof window === 'undefined') return '#';
   const redirect = redirectTo || window.location.pathname;
-  const appId = import.meta.env.VITE_APP_ID;
-  const oauthPortal = import.meta.env.VITE_OAUTH_PORTAL_URL;
+  const appId = process.env.NEXT_PUBLIC_APP_ID;
+  const oauthPortal = process.env.NEXT_PUBLIC_OAUTH_PORTAL_URL;
   return `${oauthPortal}?app_id=${appId}&redirect_uri=${encodeURIComponent(
     window.location.origin + "/api/oauth/callback?redirect=" + encodeURIComponent(redirect)
   )}`;

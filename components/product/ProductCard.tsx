@@ -1,25 +1,23 @@
-import { Link } from 'wouter';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { formatPrice } from '@shared/const';
+import Link from 'next/link';
+import { formatPrice } from '@/lib/const';
 import { ShoppingCart, Package } from 'lucide-react';
-import type { Product } from '../../../../drizzle/schema';
+import type { Product } from '@/drizzle/schema';
 
 interface ProductCardProps {
   product: Product;
   onAddToCart?: (productId: number) => void;
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const isOutOfStock = product.stock === 0;
-  
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow">
       <Link href={`/products/${product.slug}`}>
         <div className="aspect-square bg-muted flex items-center justify-center cursor-pointer">
           {product.imageUrl ? (
-            <img 
-              src={product.imageUrl} 
+            <img
+              src={product.imageUrl}
               alt={product.name}
               className="w-full h-full object-contain p-4"
             />
@@ -28,23 +26,23 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           )}
         </div>
       </Link>
-      
-      <CardContent className="p-4">
+
+      <div className="p-4">
         <Link href={`/products/${product.slug}`}>
           <h3 className="font-semibold text-lg mb-1 hover:text-primary transition-colors cursor-pointer">
             {product.name}
           </h3>
         </Link>
-        
+
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
           {product.capacity && <span>{product.capacity}</span>}
           {product.material && <span>• {product.material}</span>}
         </div>
-        
+
         <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
           {product.description}
         </p>
-        
+
         <div className="flex items-baseline gap-2">
           <span className="text-2xl font-bold text-primary">
             {formatPrice(product.price)}
@@ -53,34 +51,34 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             / piece
           </span>
         </div>
-        
+
         <p className="text-xs text-muted-foreground mt-1">
           Min. Order: {product.minOrderQty.toLocaleString()} pieces
         </p>
-      </CardContent>
-      
-      <CardFooter className="p-4 pt-0">
+      </div>
+
+      <div className="p-4 pt-0">
         {isOutOfStock ? (
-          <Button variant="secondary" className="w-full" disabled>
+          <button className="w-full px-4 py-2 rounded-md bg-secondary text-secondary-foreground opacity-50 cursor-not-allowed" disabled>
             Out of Stock
-          </Button>
+          </button>
         ) : onAddToCart ? (
-          <Button 
-            variant="default" 
-            className="w-full"
+          <button
+            className="w-full px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
             onClick={() => onAddToCart(product.id)}
           >
-            <ShoppingCart className="mr-2 h-4 w-4" />
+            <ShoppingCart className="h-4 w-4" />
             Add to Cart
-          </Button>
+          </button>
         ) : (
-          <Button variant="default" className="w-full" asChild>
-            <Link href={`/products/${product.slug}`}>
-              View Details
-            </Link>
-          </Button>
+          <Link
+            href={`/products/${product.slug}`}
+            className="w-full px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center"
+          >
+            View Details
+          </Link>
         )}
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

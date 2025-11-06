@@ -1,7 +1,7 @@
-import { Link } from 'wouter';
+import Link from 'next/link';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
-export function Footer() {
+export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground mt-auto">
       <div className="container py-12">

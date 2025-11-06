@@ -1,11 +1,11 @@
-import { COOKIE_NAME } from "@shared/const";
-import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { COOKIE_NAME } from "@/lib/const";
+import { getSessionCookieOptions } from "@/lib/_core/cookies";
+import { systemRouter } from "@/lib/_core/systemRouter";
+import { publicProcedure, protectedProcedure, router } from "@/lib/_core/trpc";
 import { z } from "zod";
-import * as db from "./db";
-import { getDb } from "./db";
-import { products, categories, cart, orders, orderItems } from "../drizzle/schema";
+import * as db from "@/lib/db";
+import { getDb } from "@/lib/db";
+import { products, categories, cart, orders, orderItems } from "@/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 

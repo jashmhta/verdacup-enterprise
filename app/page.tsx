@@ -13,12 +13,23 @@ export const metadata: Metadata = {
 };
 
 async function getFeaturedProducts() {
-  const result = await db
-    .select()
-    .from(products)
-    .orderBy(desc(products.createdAt))
-    .limit(6);
-  return result;
+  // Return empty array if database is not configured
+  if (!db) {
+    console.warn('Database not configured. Using empty product list.');
+    return [];
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(products)
+      .orderBy(desc(products.createdAt))
+      .limit(6);
+    return result;
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    return [];
+  }
 }
 
 export default async function Home() {
@@ -52,12 +63,12 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-            <div className="relative h-96">
+            <div className="relative h-96 rounded-lg overflow-hidden">
               <Image
-                src="/hero-cups.jpg"
+                src="/images/1000139884.jpg"
                 alt="VerdaCup Biodegradable Cups"
                 fill
-                className="object-contain"
+                className="object-cover"
                 priority
               />
             </div>
@@ -109,9 +120,57 @@ export default async function Home() {
             <p className="text-muted-foreground">Discover our range of eco-friendly biodegradable cups</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {featuredProducts.length > 0 ? (
+              featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            ) : (
+              // Show sample products if database is not configured
+              [
+                {
+                  name: 'Paper Cups - 150ml',
+                  image: '/images/1000139872.jpg',
+                  description: 'Single-wall paper cups perfect for hot beverages',
+                },
+                {
+                  name: 'Bagasse Cups - 300ml',
+                  image: '/images/1000139880.jpg',
+                  description: 'Eco-friendly cups made from sugarcane fiber',
+                },
+                {
+                  name: 'Custom Printed Cups',
+                  image: '/images/1000139882.jpg',
+                  description: 'Custom branded cups with your logo',
+                },
+              ].map((product, index) => (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow"
+                >
+                  <div className="aspect-square bg-muted overflow-hidden relative">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-semibold text-xl mb-2">{product.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {product.description}
+                    </p>
+                    <Link
+                      href="/products"
+                      className="w-full px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
           <div className="text-center mt-12">
             <Link
