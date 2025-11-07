@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Leaf, Award, Users, TrendingUp, Target, Heart, Sparkles, Factory } from 'lucide-react';
+import { Leaf, Award, Users, TrendingUp, Target, Heart, Sparkles, Factory, Shield } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
